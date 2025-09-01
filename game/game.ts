@@ -54,6 +54,9 @@ export class Game {
   private token: string
   private endX = 0
   private endY = 0
+  private leftX = 0
+  private baseY = 0
+  private rightX = 0
   private fromX = 0
   private fromY = 0
   private pencilPath: { x: number, y: number }[] = [];
