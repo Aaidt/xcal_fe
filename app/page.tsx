@@ -9,17 +9,17 @@ import { ModeToggle } from "@/components/ui/ModeToggle"
 export default function Home() {
   const features = [
     {
-      icon: <Users className="h-8 w-8" strokeWidth="1.5" />, 
+      icon: <Users className="h-8 w-8" strokeWidth="1.5" />,
       title: "Real-time collboration",
       description: "Work together with your team on the same canvas in real-time, seeing changes as they happen."
     },
     {
-      icon: <Share2 className="h-8 w-8"  strokeWidth="1.5" />,
+      icon: <Share2 className="h-8 w-8" strokeWidth="1.5" />,
       title: "Easy Sharing",
       description: "Share your drawings with a simple link. Control who can view or edit your work.",
     },
     {
-      icon: <Layers className="h-8 w-8"  strokeWidth="1.5" />,
+      icon: <Layers className="h-8 w-8" strokeWidth="1.5" />,
       title: "Infinite canvas",
       description: "Never run out of space with our infinite canvas that expands as you draw.",
     }
@@ -152,7 +152,7 @@ export default function Home() {
         </motion.div>
       </div>
 
-<div className="border-b border-foreground/30"></div>
+      <div className="border-b border-foreground/30"></div>
 
       <div id="features" className="bg-white dark:bg-white/10 pb-30">
         <h1 className="font-bold text-5xl pt-15 pl-15 mr-18 flex justify-center">Powerful features for creative minds</h1>
@@ -180,7 +180,7 @@ export default function Home() {
         </div>
       </div>
 
-          <div className="border-b border-foreground/30 "></div>
+      <div className="border-b border-foreground/30 "></div>
 
       <div id="pricing" className="pt-15 pb-20">
 

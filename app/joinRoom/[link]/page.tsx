@@ -1,10 +1,11 @@
 import GetRoomId from '@/components/ui/GetRoomId';
 
-export default async function Join(
-    { params } : { params: { link: string }
-}){
-    const { link } = await params;
+type JoinParams = Promise<{ link: string }>
 
-    return <GetRoomId Roomlink={link} />
+export default async function Join(
+  { params }: { params: JoinParams }) {
+  const { link } = await params;
+
+  return <GetRoomId Roomlink={link} />
 
 }
