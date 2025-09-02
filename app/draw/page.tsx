@@ -24,7 +24,7 @@ export default function Draw() {
 
   return (
     <div style={{ position: "fixed", inset: 0 }}>
-      <Tldraw persistenceKey="pages" />
+      <Tldraw persistenceKey="pages" onMount={handleMount} />
     </div>
   )
 }
