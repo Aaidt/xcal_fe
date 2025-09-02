@@ -5,6 +5,7 @@ import Image from "next/image"
 import { ArrowRight, Share2, Users, Layers, Check, ChevronRight } from 'lucide-react'
 import { motion } from "framer-motion"
 import { ModeToggle } from "@/components/ui/ModeToggle"
+import { signIn } from "next-auth/react"
 
 export default function Home() {
   const features = [
@@ -93,15 +94,7 @@ export default function Home() {
               <div className="hover:underline hover:underline-offset-3 font-semibold transition-all duration-300 hover:-translate-y-1 cursor-pointer">Pricing</div>
             </Link>
 
-            <div className="flex gap-2 mr-4">
-              <Link href="/signup">
-                <button className="bg-foreground font-semibold text-background transition-all duration-300 hover:bg-foreground/80 px-3 py-2 rounded-md cursor-pointer">Signup</button>
-              </Link>
-
-              <Link href="/signin">
-                <button className="bg-background font-semibold border border-foreground/30 transition-all duration-300 hover:bg-foreground/10 px-3 py-2 rounded-md cursor-pointer">Login</button>
-              </Link>
-            </div>
+            <button onClick={() => signIn()} className="bg-background font-semibold border border-foreground/30 transition-all duration-300 hover:bg-foreground/10 px-3 py-2 rounded-md cursor-pointer">Login</button>
 
           </div>
         </div>
