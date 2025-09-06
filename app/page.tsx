@@ -100,7 +100,7 @@ export default function Home() {
                         </Link>
                         <SignedOut>
                             <SignInButton>
-                                <button className="bg-foreground font-semibold text-background rounded-md font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
+                                <button className="bg-foreground font-semibold text-background rounded-md font-medium text-sm sm:text-base h-8 sm:h-10 px-3 sm:px-5 cursor-pointer">
                                     Login
                                 </button>
                             </SignInButton>
