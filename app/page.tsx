@@ -7,7 +7,6 @@ import { motion } from "framer-motion"
 import { ModeToggle } from "@/components/ui/ModeToggle"
 import {
     SignInButton,
-    SignUpButton,
     SignedIn,
     SignedOut,
     UserButton,
@@ -100,12 +99,11 @@ export default function Home() {
                             <div className="hover:underline hover:underline-offset-3 font-semibold transition-all duration-300 hover:-translate-y-1 cursor-pointer">Pricing</div>
                         </Link>
                         <SignedOut>
-                            <SignInButton />
-                            <SignUpButton>
+                            <SignInButton>
                                 <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
-                                    Sign Up
+                                    Login
                                 </button>
-                            </SignUpButton>
+                            </SignInButton>
                         </SignedOut>
                         <SignedIn>
                             <UserButton />
@@ -135,7 +133,7 @@ export default function Home() {
                     </div>
 
                     <div className="pt-5 flex ">
-                        <Link href="/signup">
+                        <Link href="/draw">
                             <button className="bg-foreground flex items-center text-background font-medium text-md rounded-md px-3 py-2 flex cursor-pointer hover:bg-foreground/80 transition-all duration-200">
                                 Start drawing now <ArrowRight className="pl-2" />
                             </button>
