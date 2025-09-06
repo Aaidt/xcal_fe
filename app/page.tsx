@@ -138,10 +138,12 @@ export default function Home() {
                                 Start drawing now <ArrowRight className="pl-2" />
                             </button>
                         </Link>
-                        <button
+                        <Link href="/dashboard">                        <button
                             className="ml-6 bg-background font-medium border flex items-center border-foreground/30 transition-all duration-300 hover:bg-foreground/10 px-3 py-2 rounded-md cursor-pointer">
-                            Watch demo
+                            Go to dashboard
                         </button>
+                        </Link>
+
                     </div>
 
                     <div className="flex pt-5 text-gray-400">
