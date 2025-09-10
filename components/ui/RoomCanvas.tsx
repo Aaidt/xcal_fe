@@ -21,7 +21,7 @@ export default function RoomCanvas({ roomId, link }:
 
    useEffect(() => {
       async function connectWebsocket() {
-         const token = await getToken();
+         const token = await getToken({ template: "ws_auth" });
          if (!token) {
             toast.error('Login first!!')
             setLoading(false);

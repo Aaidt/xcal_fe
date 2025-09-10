@@ -2,10 +2,11 @@
 
 import { useState, useEffect, useRef } from "react"
 import IconButton from "./IconButton"
-import { Users, Pencil, Circle, Square, Minus, MoveRight, MousePointer, Eraser } from "lucide-react"
+import { Users, Pencil, Circle, Square, Minus, MoveRight, MousePointer, Eraser, ChevronLeft } from "lucide-react"
 import { Game } from "../../game/game"
 import { toast } from "react-toastify"
 import { useAuth } from "@clerk/nextjs"
+import { useRouter } from "next/navigation"
 
 export type Tool = "pencil" | "circle" | "rect" | "line" | "arrow" | "pointer" | "eraser"
 
@@ -21,6 +22,7 @@ export default function Canvas({
    link: string,
    visitors: number | null
 }) {
+
    const { getToken } = useAuth();
    const canvasRef = useRef<HTMLCanvasElement>(null)
    const [selectedTool, setSelectedTool] = useState<Tool>("pencil")
@@ -68,6 +70,8 @@ function Topbar({
    link: string,
    visitors: number | null
 }) {
+
+   const router = useRouter()
    return (
       <div>
          <div className="flex fixed top-4 left-1/2 -translate-x-1/2 z-50 px-1 py-1 bg-[#232329] gap-2 rounded-lg">
@@ -100,11 +104,22 @@ function Topbar({
                activated={selectedTool === "eraser"} />
          </div>
 
+
+         <div className="fixed top-0 left-0 m-4 flex items-center">
+
+            <button onClick={() => {
+               router.push("/dashboard")
+            }}
+               className="px-3 py-2 bg-[#a9a4ff] text-black text-sm hover:bg-[#a9a4ff]/90 cursor-pointer rounded-md flex gap-1 items-center"
+            ><ChevronLeft className="h-4 w-4" /><p>Dashboard</p></button>
+
+         </div>
+
          <div className="fixed top-0 right-0 m-4 flex gap-2 items-center">
 
             <button onClick={() => {
                toast.success(`Share this link with your friends!! ⚡${link}⚡`)
-            }} className="cursor-pointer text-black rounded-md px-3 py-2 bg-[#a9a4ff] text-xs hover:bg-[#a9a4ff]/90 ">
+            }} className="cursor-pointer text-black rounded-md px-3 py-2 bg-[#a9a4ff] text-sm hover:bg-[#a9a4ff]/90 ">
                Share
             </button>
 
