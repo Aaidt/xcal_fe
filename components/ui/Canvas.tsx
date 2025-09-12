@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react"
 import IconButton from "./IconButton"
 import { Users, Pencil, Square, Minus, MoveRight, MousePointer, Circle, Menu } from "lucide-react"
-import { Game } from "../../game/game"
 import { toast } from "react-toastify"
 import { useAuth } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
@@ -28,13 +27,11 @@ export default function Canvas({
    const { getToken } = useAuth();
    const canvasRef = useRef<HTMLCanvasElement>(null)
    const [selectedTool, setSelectedTool] = useState<Tool | null>(null)
-   const [game, setGame] = useState<Game>();
    const [draw, setDraw] = useState<Draw>();
 
    useEffect(() => {
-      // game?.setTool(selectedTool)
       draw?.setTool(selectedTool)
-   }, [selectedTool, game, draw])
+   }, [selectedTool, draw])
 
    useEffect(() => {
       async function createGame() {
@@ -44,15 +41,11 @@ export default function Canvas({
             return
          }
          if (canvasRef.current) {
-            const g = new Game(canvasRef.current, roomId, socket, token);
-            setGame(g)
-
             // @ts-ignore
             const d = new Draw(rough.canvas(document.getElementById("Canvas")), canvasRef.current, roomId, socket, token);
             setDraw(d)
 
             return () => {
-               g.destroy()
                d.destroy()
             }
          }
