@@ -27,7 +27,7 @@ export default function Canvas({
 
    const { getToken } = useAuth();
    const canvasRef = useRef<HTMLCanvasElement>(null)
-   const [selectedTool, setSelectedTool] = useState<Tool>("pencil")
+   const [selectedTool, setSelectedTool] = useState<Tool | null>(null)
    const [game, setGame] = useState<Game>();
    const [draw, setDraw] = useState<Draw>();
 
@@ -74,7 +74,7 @@ function Topbar({
    link,
    visitors
 }: {
-   selectedTool: Tool,
+   selectedTool: Tool | null
    setSelectedTool: (s: Tool) => void,
    link: string,
    visitors: number | null

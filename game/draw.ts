@@ -63,7 +63,7 @@ export class Draw {
    private clicked: boolean
    private startX = 0
    private startY = 0
-   private selectedTool: Tool = "pencil"
+   private selectedTool: Tool | null = null
    private centerX = 0
    private centerY = 0
    private token: string
@@ -92,7 +92,7 @@ export class Draw {
       this.init()
    }
 
-   setTool(tool: "circle" | "pencil" | "rect" | "line" | "arrow" | "pointer" | "ellipse") {
+   setTool(tool: "circle" | "pencil" | "rect" | "line" | "arrow" | "pointer" | "ellipse" | null) {
       this.selectedTool = tool
    }
 
