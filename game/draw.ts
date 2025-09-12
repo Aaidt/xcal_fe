@@ -123,7 +123,7 @@ export class Draw {
 
       this.existingShapes.map(shape => {
          if (shape.type === "rect") {
-            this.draw.rectangle(shape.x, shape.y, shape.width, shape.height);
+            this.draw.rectangle(shape.x, shape.y, shape.width, shape.height, shape.properties);
          }
          else if (shape.type === "pencil") {
             this.ctx.beginPath();
@@ -145,7 +145,7 @@ export class Draw {
          }
 
          else if (shape.type === "ellipse") {
-            this.draw.ellipse(shape.x, shape.y, shape.width, shape.height)
+            this.draw.ellipse(shape.x, shape.y, shape.width, shape.height, shape.properties)
          }
          else if (shape.type === "line") {
             this.ctx.beginPath();
