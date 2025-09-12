@@ -2,13 +2,15 @@
 
 import { useState, useEffect, useRef } from "react"
 import IconButton from "./IconButton"
-import { Users, Pencil, Circle, Square, Minus, MoveRight, MousePointer, Eraser, ChevronLeft } from "lucide-react"
+import { Users, Pencil, Circle, Square, Minus, MoveRight, MousePointer, Lasso, Menu } from "lucide-react"
 import { Game } from "../../game/game"
 import { toast } from "react-toastify"
 import { useAuth } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
+import { Draw } from "@/game/draw"
+import rough from "roughjs"
 
-export type Tool = "pencil" | "circle" | "rect" | "line" | "arrow" | "pointer" | "eraser"
+export type Tool = "pencil" | "circle" | "rect" | "line" | "arrow" | "pointer" | "ellipse"
 
 
 export default function Canvas({
@@ -27,10 +29,12 @@ export default function Canvas({
    const canvasRef = useRef<HTMLCanvasElement>(null)
    const [selectedTool, setSelectedTool] = useState<Tool>("pencil")
    const [game, setGame] = useState<Game>();
+   const [draw, setDraw] = useState<Draw>();
 
    useEffect(() => {
-      game?.setTool(selectedTool)
-   }, [selectedTool, game])
+      // game?.setTool(selectedTool)
+      draw?.setTool(selectedTool)
+   }, [selectedTool, game, draw])
 
    useEffect(() => {
       async function createGame() {
@@ -43,8 +47,13 @@ export default function Canvas({
             const g = new Game(canvasRef.current, roomId, socket, token);
             setGame(g)
 
+            // @ts-ignore
+            const d = new Draw(rough.canvas(document.getElementById("Canvas")), canvasRef.current, roomId, socket, token);
+            setDraw(d)
+
             return () => {
                g.destroy()
+               d.destroy()
             }
          }
       }
@@ -53,7 +62,7 @@ export default function Canvas({
 
 
    return <div className="min-h-screen overflow-hidden">
-      <canvas width={window.innerWidth} height={window.innerHeight} ref={canvasRef} />
+      <canvas id="Canvas" width={window.innerWidth} height={window.innerHeight} ref={canvasRef} />
       <Topbar selectedTool={selectedTool} setSelectedTool={setSelectedTool} link={link} visitors={visitors} />
    </div>
 }
@@ -99,9 +108,9 @@ function Topbar({
                onClick={() => setSelectedTool("arrow")}
                activated={selectedTool === "arrow"} />
 
-            <IconButton icon={<Eraser className="size-3.5" strokeWidth="1.5" />}
-               onClick={() => setSelectedTool("eraser")}
-               activated={selectedTool === "eraser"} />
+            <IconButton icon={<Lasso className="size-3.5" strokeWidth="1.5" />}
+               onClick={() => setSelectedTool("ellipse")}
+               activated={selectedTool === "ellipse"} />
          </div>
 
 
@@ -110,8 +119,8 @@ function Topbar({
             <button onClick={() => {
                router.push("/dashboard")
             }}
-               className="px-3 py-2 bg-[#a9a4ff] text-black text-sm hover:bg-[#a9a4ff]/90 cursor-pointer rounded-md flex gap-1 items-center"
-            ><ChevronLeft className="h-4 w-4" /><p>Dashboard</p></button>
+               className="px-3 py-2 bg-gray-400 text-black text-sm hover:bg-gray-300 cursor-pointer rounded-md flex gap-1 items-center"
+            ><Menu className="h-4 w-4" /></button>
 
          </div>
 

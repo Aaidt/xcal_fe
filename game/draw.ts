@@ -8,13 +8,21 @@ type Shapes = {
    y: number,
    width: number,
    height: number,
+   properties: {
+      stroke: string,
+      strokeWidth: number,
+      roughness: number
+   }
 } | {
    type: "circle",
    centerX: number,
    centerY: number,
-   radius: number,
-   startAngle: number,
-   endAngle: number
+   diameter: number
+   properties: {
+      stroke: string,
+      strokeWidth: number,
+      roughness: number
+   }
 } | {
    type: "line",
    startX: number,
@@ -31,15 +39,22 @@ type Shapes = {
    type: "pencil",
    path: { x: number, y: number }[]
 } | {
-   type: "eraser",
+   type: "ellipse"
    x: number,
    y: number,
    width: number,
-   height: number,
+   height: number
+   properties: {
+      stroke: string,
+      strokeWidth: number,
+      roughness: number
+   }
 }
 
-export class Game {
 
+export class Draw {
+
+   private draw
    private canvas: HTMLCanvasElement
    private ctx: CanvasRenderingContext2D
    private existingShapes: Shapes[]
@@ -48,7 +63,7 @@ export class Game {
    private clicked: boolean
    private startX = 0
    private startY = 0
-   private selectedTool: Tool = "pointer"
+   private selectedTool: Tool = "pencil"
    private centerX = 0
    private centerY = 0
    private token: string
@@ -62,8 +77,10 @@ export class Game {
    private pencilPath: { x: number, y: number }[] = [];
 
 
-   constructor(canvas: HTMLCanvasElement, roomId: string, socket: WebSocket, token: string) {
+   // @ts-ignore
+   constructor(draw, canvas, roomId: string, socket: WebSocket, token: string) {
       this.token = token
+      this.draw = draw
       this.canvas = canvas
       this.ctx = canvas.getContext("2d")!;
       this.existingShapes = []
@@ -75,7 +92,7 @@ export class Game {
       this.init()
    }
 
-   setTool(tool: "circle" | "pencil" | "rect" | "line" | "arrow" | "pointer" | "eraser") {
+   setTool(tool: "circle" | "pencil" | "rect" | "line" | "arrow" | "pointer" | "ellipse") {
       this.selectedTool = tool
    }
 
@@ -103,11 +120,7 @@ export class Game {
             this.existingShapes.push(parsedShape.shape);
             this.clearCanvas();
          }
-
-
       }
-
-
    }
 
    clearCanvas() {
@@ -117,9 +130,7 @@ export class Game {
 
       this.existingShapes.map(shape => {
          if (shape.type === "rect") {
-            this.ctx.lineWidth = 1
-            this.ctx.strokeStyle = "white"
-            this.ctx.strokeRect(shape.x, shape.y, shape.width, shape.height);
+            this.draw.rectangle(shape.x, shape.y, shape.width, shape.height, shape.properties);
          }
          else if (shape.type === "pencil") {
             this.ctx.beginPath();
@@ -140,10 +151,10 @@ export class Game {
             this.ctx.stroke();
          }
          else if (shape.type === "circle") {
-            this.ctx.beginPath()
-            this.ctx.strokeStyle = "white"
-            this.ctx.arc(shape.centerX, shape.centerY, shape.radius, shape.startAngle, shape.endAngle);
-            this.ctx.stroke();
+            this.draw.circle(shape.centerX, shape.centerY, shape.diameter, shape.properties);
+         }
+         else if (shape.type === "ellipse") {
+            this.draw.ellipse(shape.x, shape.y, shape.width, shape.height, shape.properties)
          }
          else if (shape.type === "line") {
             this.ctx.beginPath();
@@ -228,7 +239,12 @@ export class Game {
             x: this.startX,
             y: this.startY,
             width,
-            height
+            height,
+            properties: {
+               stroke: "white",
+               strokeWidth: 1,
+               roughness: 0.5
+            }
          }
       } else if (selectedTool === "pencil") {
          shape = {
@@ -238,14 +254,18 @@ export class Game {
       } else if (selectedTool === "circle") {
          const dx = e.clientX - this.centerX;
          const dy = e.clientY - this.centerY;
-         const radius = Math.sqrt(dx * dx + dy * dy);
+         const diameter = 2 * Math.sqrt(dx * dx + dy * dy);
          shape = {
             type: "circle",
-            radius: radius,
             centerX: this.centerX,
             centerY: this.centerY,
-            startAngle: 0,
-            endAngle: Math.PI * 2
+            diameter: diameter,
+            properties: {
+               stroke: "white",
+               strokeWidth: 1,
+               roughness: 0.5
+            }
+
          }
       } else if (selectedTool === "line") {
          shape = {
@@ -263,15 +283,20 @@ export class Game {
             toX: e.clientX,
             toY: e.clientY
          }
-      } else if (selectedTool === "eraser") {
+      } else if (selectedTool === "ellipse") {
          shape = {
-            type: "eraser",
-            x: this.startX,
-            y: this.startY,
-            width,
-            height,
-         };
+            type: "ellipse",
+            x: this.fromX,
+            y: this.fromY,
+            width: width,
+            height: height,
+            properties: {
+               stroke: "white",
+               strokeWidth: 1,
+               roughness: 0.5
+            }
 
+         }
       }
 
       if (!shape) return;
@@ -301,20 +326,16 @@ export class Game {
 
          this.clearCanvas()
 
-         this.ctx.strokeStyle = "white"
          const selectedTool = this.selectedTool
 
          if (selectedTool === "rect") {
-            this.ctx.strokeRect(this.startX, this.startY, width, height);
+            this.draw.rectangle(this.startX, this.startY, width, height, { stroke: "white", strokeWidth: 1, roughness: 0.5 });
          } else if (selectedTool === "circle") {
             const dx = e.clientX - this.centerX;
             const dy = e.clientY - this.centerY;
-            const radius = Math.sqrt(dx * dx + dy * dy);
+            const diameter = 2 * Math.sqrt(dx * dx + dy * dy);
 
-            this.ctx.beginPath()
-            this.ctx.strokeStyle = "white"
-            this.ctx.arc(this.centerX, this.centerY, radius, 0, Math.PI * 2);
-            this.ctx.stroke()
+            this.draw.circle(this.centerX, this.centerY, diameter, { stroke: "white", strokeWidth: 1, roughness: 0.5 });
          } else if (selectedTool === "line") {
             this.ctx.beginPath();
             this.ctx.moveTo(this.startX, this.startY)
@@ -380,6 +401,8 @@ export class Game {
             this.ctx.strokeStyle = "white";
             this.ctx.lineWidth = 2;
             this.ctx.stroke();
+         } else if (this.selectedTool === "ellipse") {
+            this.draw.ellipse(this.startX, this.startY, width, height, { stroke: "white", strokeWidth: 1, roughness: 0.5 })
          }
       }
    }

@@ -21,57 +21,62 @@ export default function RoomCanvas({ roomId, link }:
 
    useEffect(() => {
       async function connectWebsocket() {
-         const token = await getToken({ template: "ws_auth" });
-         if (!token) {
-            toast.error('Login first!!')
-            setLoading(false);
-            router.push("/signin");
-            return
-         }
-
-         if (!WS_URL) {
-            console.log('No websocket url provided.')
-            setLoading(false);
-            return
-         }
-
-         const ws = new WebSocket(`${WS_URL}?token=${token}`)
-         wsRef.current = ws
-         setSocket(ws);
-
-         ws.onerror = (e) => {
-            toast.error('Falied to connect to the server.')
-            console.log('Ws error: ' + JSON.stringify(e, ["message", "arguments", "type", "name"]))
-            setLoading(false);
-         }
-
-         ws.onopen = () => {
-            ws.send(JSON.stringify({
-               type: "join_room",
-               link: link
-            }))
-         }
-
-         ws.onmessage = (event) => {
-            try {
-               const data = JSON.parse(event.data);
-               if (data.status === "Success") {
-                  setLoading(false);
-               }
-
-               if (data.type === "visitor_count") {
-                  console.log("Visitor count updated: ", data.visitors);
-                  setVisitors(data.visitors);
-               }
-            } catch (err) {
-               console.log("Error is: " + err)
+         try {
+            const token = await getToken({ template: "ws_auth" });
+            if (!token) {
+               toast.error('Login first!!')
+               setLoading(false);
+               router.push("/signin");
+               return
             }
-         }
 
-         ws.onclose = (e) => {
-            console.log('Ws connection closed.' + JSON.stringify(e))
-            toast.warn("Websocket connection closed")
-            setLoading(false);
+            if (!WS_URL) {
+               console.log('No websocket url provided.')
+               setLoading(false);
+               return
+            }
+
+            const ws = new WebSocket(`${WS_URL}?token=${token}`)
+            wsRef.current = ws
+            setSocket(ws);
+
+            ws.onerror = (e) => {
+               toast.error('Falied to connect to the server.')
+               console.log('Ws error: ' + JSON.stringify(e, ["message", "arguments", "type", "name"]))
+               setLoading(false);
+            }
+
+            ws.onopen = () => {
+               ws.send(JSON.stringify({
+                  type: "join_room",
+                  link: link
+               }))
+            }
+
+            ws.onmessage = (event) => {
+               try {
+                  const data = JSON.parse(event.data);
+                  if (data.status === "Success") {
+                     setLoading(false);
+                  }
+
+                  if (data.type === "visitor_count") {
+                     console.log("Visitor count updated: ", data.visitors);
+                     setVisitors(data.visitors);
+                  }
+               } catch (err) {
+                  console.log("Error is: " + err)
+               }
+            }
+
+            ws.onclose = (e) => {
+               console.log('Ws connection closed.' + JSON.stringify(e))
+               toast.warn("Websocket connection closed")
+               setLoading(false);
+            }
+
+         } catch (err) {
+            console.log("Error in connnecting to the websocket: " + err)
          }
       }
       connectWebsocket();
