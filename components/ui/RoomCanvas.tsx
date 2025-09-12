@@ -66,6 +66,8 @@ export default function RoomCanvas({ roomId, link }:
                   }
                } catch (err) {
                   console.log("Error is: " + err)
+               } finally {
+                  setLoading(false)
                }
             }
 
