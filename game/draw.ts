@@ -216,7 +216,9 @@ export class Draw {
       this.fromX = (e.clientX)
       this.fromY = (e.clientY)
 
-      this.pencilPath = [{ x: (e.clientX), y: (e.clientY) }]
+      if (this.selectedTool === "pencil") {
+         this.pencilPath = [{ x: (e.clientX), y: (e.clientY) }]
+      }
    }
 
 
@@ -379,8 +381,6 @@ export class Draw {
             this.ctx.lineWidth = 1;
          } else if (selectedTool === "pencil") {
             this.pencilPath.push({ x: e.clientX, y: e.clientY });
-
-            this.clearCanvas();
 
             const path = this.pencilPath;
             if (path.length < 2) return;

@@ -75,7 +75,7 @@ function Topbar({
    visitors
 }: {
    selectedTool: Tool | null
-   setSelectedTool: (s: Tool) => void,
+   setSelectedTool: (s: Tool | null) => void,
    link: string,
    visitors: number | null
 }) {
