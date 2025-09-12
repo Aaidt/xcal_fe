@@ -48,7 +48,7 @@ export class Game {
    private clicked: boolean
    private startX = 0
    private startY = 0
-   private selectedTool: Tool = "pointer"
+   private selectedTool: Tool = "pencil"
    private centerX = 0
    private centerY = 0
    private token: string
@@ -75,7 +75,7 @@ export class Game {
       this.init()
    }
 
-   setTool(tool: "circle" | "pencil" | "rect" | "line" | "arrow" | "pointer" | "eraser") {
+   setTool(tool: "circle" | "pencil" | "rect" | "line" | "arrow" | "pointer" | "ellipse") {
       this.selectedTool = tool
    }
 
@@ -263,15 +263,15 @@ export class Game {
             toX: e.clientX,
             toY: e.clientY
          }
-      } else if (selectedTool === "eraser") {
-         shape = {
-            type: "eraser",
-            x: this.startX,
-            y: this.startY,
-            width,
-            height,
-         };
-
+         // } else if (selectedTool === "eraser") {
+         //    shape = {
+         //       type: "eraser",
+         //       x: this.startX,
+         //       y: this.startY,
+         //       width,
+         //       height,
+         //    };
+         //
       }
 
       if (!shape) return;
