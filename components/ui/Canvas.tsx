@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import IconButton from "./IconButton"
-import { Users, Pencil, Circle, Square, Minus, MoveRight, MousePointer, Lasso, Menu } from "lucide-react"
+import { Users, Pencil, Square, Minus, MoveRight, MousePointer, Circle, Menu } from "lucide-react"
 import { Game } from "../../game/game"
 import { toast } from "react-toastify"
 import { useAuth } from "@clerk/nextjs"
@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation"
 import { Draw } from "@/game/draw"
 import rough from "roughjs"
 
-export type Tool = "pencil" | "circle" | "rect" | "line" | "arrow" | "pointer" | "ellipse"
+export type Tool = "pencil" | "rect" | "line" | "arrow" | "pointer" | "ellipse"
 
 
 export default function Canvas({
@@ -92,10 +92,6 @@ function Topbar({
                onClick={() => setSelectedTool("pencil")}
                activated={selectedTool === "pencil"} />
 
-            <IconButton icon={<Circle className="size-3.5" fill={`${selectedTool == "circle" ? "white" : "#232329"}`} strokeWidth="1.5" />}
-               onClick={() => setSelectedTool("circle")}
-               activated={selectedTool === "circle"} />
-
             <IconButton icon={<Square className="size-3.5" fill={`${selectedTool == "rect" ? "white" : "#232329"}`} strokeWidth="1.5" />}
                onClick={() => setSelectedTool("rect")}
                activated={selectedTool === "rect"} />
@@ -108,7 +104,7 @@ function Topbar({
                onClick={() => setSelectedTool("arrow")}
                activated={selectedTool === "arrow"} />
 
-            <IconButton icon={<Lasso className="size-3.5" strokeWidth="1.5" />}
+            <IconButton icon={<Circle className="size-3.5" strokeWidth="1.5" />}
                onClick={() => setSelectedTool("ellipse")}
                activated={selectedTool === "ellipse"} />
          </div>

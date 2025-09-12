@@ -14,16 +14,6 @@ type Shapes = {
       roughness: number
    }
 } | {
-   type: "circle",
-   centerX: number,
-   centerY: number,
-   diameter: number
-   properties: {
-      stroke: string,
-      strokeWidth: number,
-      roughness: number
-   }
-} | {
    type: "line",
    startX: number,
    startY: number,
@@ -92,8 +82,11 @@ export class Draw {
       this.init()
    }
 
-   setTool(tool: "circle" | "pencil" | "rect" | "line" | "arrow" | "pointer" | "ellipse" | null) {
+   setTool(tool: "pencil" | "rect" | "line" | "arrow" | "pointer" | "ellipse" | null) {
       this.selectedTool = tool
+      if (this.selectedTool !== 'pencil') {
+         this.pencilPath = []
+      }
    }
 
    async init() {
@@ -150,9 +143,7 @@ export class Draw {
             this.ctx.lineWidth = 2;
             this.ctx.stroke();
          }
-         else if (shape.type === "circle") {
-            this.draw.circle(shape.centerX, shape.centerY, shape.diameter, shape.properties);
-         }
+
          else if (shape.type === "ellipse") {
             this.draw.ellipse(shape.x, shape.y, shape.width, shape.height, shape.properties)
          }
@@ -253,22 +244,6 @@ export class Draw {
             type: "pencil",
             path: this.pencilPath
          }
-      } else if (selectedTool === "circle") {
-         const dx = e.clientX - this.centerX;
-         const dy = e.clientY - this.centerY;
-         const diameter = 2 * Math.sqrt(dx * dx + dy * dy);
-         shape = {
-            type: "circle",
-            centerX: this.centerX,
-            centerY: this.centerY,
-            diameter: diameter,
-            properties: {
-               stroke: "white",
-               strokeWidth: 1,
-               roughness: 0.5
-            }
-
-         }
       } else if (selectedTool === "line") {
          shape = {
             type: "line",
@@ -332,12 +307,6 @@ export class Draw {
 
          if (selectedTool === "rect") {
             this.draw.rectangle(this.startX, this.startY, width, height, { stroke: "white", strokeWidth: 1, roughness: 0.5 });
-         } else if (selectedTool === "circle") {
-            const dx = e.clientX - this.centerX;
-            const dy = e.clientY - this.centerY;
-            const diameter = 2 * Math.sqrt(dx * dx + dy * dy);
-
-            this.draw.circle(this.centerX, this.centerY, diameter, { stroke: "white", strokeWidth: 1, roughness: 0.5 });
          } else if (selectedTool === "line") {
             this.ctx.beginPath();
             this.ctx.moveTo(this.startX, this.startY)
