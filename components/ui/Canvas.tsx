@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import IconButton from "./IconButton"
-import { Users, Pencil, Square, Minus, MoveRight, MousePointer, Circle, Menu } from "lucide-react"
+import { Users, Pencil, Square, Minus, MoveRight, MousePointer, Circle, SquareArrowLeft } from "lucide-react"
 import { toast } from "react-toastify"
 import { useAuth } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
@@ -77,7 +77,7 @@ function Topbar({
    return (
       <div>
          <div className="flex fixed top-4 left-1/2 -translate-x-1/2 z-50 px-1 py-1 bg-[#232329] gap-2 rounded-lg">
-            <IconButton icon={<MousePointer className="size-3.5" fill={`${selectedTool == "pointer" ? "white" : "#232329"}`} strokeWidth="1.5" />}
+            <IconButton icon={<MousePointer className="size-3.5" strokeWidth="1.5" />}
                onClick={() => setSelectedTool("pointer")}
                activated={selectedTool === "pointer"} />
 
@@ -85,15 +85,15 @@ function Topbar({
                onClick={() => setSelectedTool("pencil")}
                activated={selectedTool === "pencil"} />
 
-            <IconButton icon={<Square className="size-3.5" fill={`${selectedTool == "rect" ? "white" : "#232329"}`} strokeWidth="1.5" />}
+            <IconButton icon={<Square className="size-3.5" strokeWidth="1.5" />}
                onClick={() => setSelectedTool("rect")}
                activated={selectedTool === "rect"} />
 
-            <IconButton icon={<Minus className="size-3.5" fill={`${selectedTool == "line" ? "white" : "#232329"}`} strokeWidth="1.5" />}
+            <IconButton icon={<Minus className="size-3.5" strokeWidth="1.5" />}
                onClick={() => setSelectedTool("line")}
                activated={selectedTool === "line"} />
 
-            <IconButton icon={<MoveRight className="size-3.5" fill={`${selectedTool == "arrow" ? "white" : "#232329"}`} strokeWidth="1.5" />}
+            <IconButton icon={<MoveRight className="size-3.5" strokeWidth="1.5" />}
                onClick={() => setSelectedTool("arrow")}
                activated={selectedTool === "arrow"} />
 
@@ -109,7 +109,7 @@ function Topbar({
                router.push("/dashboard")
             }}
                className="px-3 py-2 bg-gray-400 text-black text-sm hover:bg-gray-300 cursor-pointer rounded-md flex gap-1 items-center"
-            ><Menu className="h-4 w-4" /></button>
+            ><SquareArrowLeft className="h-4 w-4" /></button>
 
          </div>
 
