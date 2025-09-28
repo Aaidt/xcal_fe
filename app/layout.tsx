@@ -1,22 +1,21 @@
 "use client"
 
-
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/ThemeProvider"
 import { ClerkProvider } from '@clerk/nextjs'
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
+   variable: "--font-geist-sans",
+   subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
+   variable: "--font-geist-mono",
+   subsets: ["latin"],
 });
 
 // export const metadata: Metadata = {
@@ -25,39 +24,40 @@ const geistMono = Geist_Mono({
 // };
 
 export default function RootLayout({
-    children,
+   children,
 }: Readonly<{
-    children: React.ReactNode;
+   children: React.ReactNode;
 }>) {
-    return (
-        <ClerkProvider>
-            <html lang="en" suppressHydrationWarning>
-                <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                    <ThemeProvider
-                        attribute="class"
-                        defaultTheme="system"
-                        enableSystem
-                        disableTransitionOnChange>
+   return (
+      <ClerkProvider>
+         <html lang="en" suppressHydrationWarning>
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+               <ThemeProvider
+                  attribute="class"
+                  defaultTheme="system"
+                  enableSystem
+                  disableTransitionOnChange>
 
 
-                        {children}
-                        <ToastContainer
-                            position="top-center"
-                            autoClose={5000}
-                            hideProgressBar={false}
-                            newestOnTop={true}
-                            rtl={false}
-                            pauseOnHover
-                            theme="dark"
-                            transition={Zoom}
-                        />
+                  {children}
+                  <SpeedInsights />
+                  <ToastContainer
+                     position="top-center"
+                     autoClose={5000}
+                     hideProgressBar={false}
+                     newestOnTop={true}
+                     rtl={false}
+                     pauseOnHover
+                     theme="dark"
+                     transition={Zoom}
+                  />
 
-                    </ThemeProvider>
+               </ThemeProvider>
 
 
-                </body>
-            </html>
+            </body>
+         </html>
 
-        </ClerkProvider>
-    );
+      </ClerkProvider>
+   );
 }
