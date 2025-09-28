@@ -11,7 +11,6 @@ type Shapes = {
    properties: {
       stroke: string,
       strokeWidth: number,
-      roughness: number
    }
 } | {
    type: "line",
@@ -37,7 +36,6 @@ type Shapes = {
    properties: {
       stroke: string,
       strokeWidth: number,
-      roughness: number
    }
 }
 
@@ -115,6 +113,18 @@ export class Draw {
          }
       }
    }
+
+
+   // redraw only the shape that is being drawn instead of the while canvas
+   renderShape(selectedTool: string | null) {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.fillStyle = "#121212"
+      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+
+   }
+
+
 
    clearCanvas() {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -236,7 +246,6 @@ export class Draw {
             properties: {
                stroke: "white",
                strokeWidth: 1,
-               roughness: 0.5
             }
          }
       } else if (selectedTool === "pencil") {
@@ -270,7 +279,6 @@ export class Draw {
             properties: {
                stroke: "white",
                strokeWidth: 1,
-               roughness: 0.5
             }
 
          }
@@ -301,12 +309,13 @@ export class Draw {
          this.endX = (e.clientX)
          this.endY = (e.clientY)
 
-         this.clearCanvas()
-
          const selectedTool = this.selectedTool
 
+         this.clearCanvas()
+         this.renderShape(selectedTool);
+
          if (selectedTool === "rect") {
-            this.draw.rectangle(this.startX, this.startY, width, height, { stroke: "white", strokeWidth: 1, roughness: 0.5 });
+            this.draw.rectangle(this.startX, this.startY, width, height, { stroke: "white", strokeWidth: 1 });
          } else if (selectedTool === "line") {
             this.ctx.beginPath();
             this.ctx.moveTo(this.startX, this.startY)
@@ -371,7 +380,7 @@ export class Draw {
             this.ctx.lineWidth = 2;
             this.ctx.stroke();
          } else if (this.selectedTool === "ellipse") {
-            this.draw.ellipse(this.startX, this.startY, width, height, { stroke: "white", strokeWidth: 1, roughness: 0.5 })
+            this.draw.ellipse(this.startX, this.startY, width, height, { stroke: "white", strokeWidth: 1 })
          }
       }
    }

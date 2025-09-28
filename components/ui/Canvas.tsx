@@ -108,7 +108,7 @@ function Topbar({
             <button onClick={() => {
                router.push("/dashboard")
             }}
-               className="px-3 py-2 bg-gray-400 text-black text-sm hover:bg-gray-300 cursor-pointer rounded-md flex gap-1 items-center"
+               className="px-3 py-2 bg-[#a9a4ff] text-black text-sm hover:bg-[#a9a4ff]/90 cursor-pointer rounded-md flex gap-1 items-center"
             ><SquareArrowLeft className="h-4 w-4" /></button>
 
          </div>
