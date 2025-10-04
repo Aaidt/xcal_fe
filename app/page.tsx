@@ -148,7 +148,7 @@ export default function Home() {
                      in real-time
                   </div>
 
-                  <div className="text-lg text-foreground/80 text-justify text-wrap ">
+                  <div className="text-lg text-white/80 text-justify text-wrap ">
                      Create beautiful diagrams, sketches and wireframes with a <br />
                      simple, intuitive interface. Share your ideas with your team in <br />
                      real-time and bring your concpets to life.
@@ -161,14 +161,14 @@ export default function Home() {
                         </button>
                      </Link>
                      <Link href="/dashboard">                        <button
-                        className="ml-6 bg-transparent font-medium border flex items-center border-foreground/30 transition-all duration-300 hover:bg-white/10 px-3 py-2 rounded-md cursor-pointer">
+                        className="ml-6 bg-transparent font-medium border flex items-center border-white/30 transition-all duration-300 hover:bg-white/10 px-3 py-2 rounded-md cursor-pointer">
                         Go to dashboard
                      </button>
                      </Link>
 
                   </div>
 
-                  <div className="flex pt-5 text-foreground/80 ">
+                  <div className="flex pt-5 text-white/80 ">
                      <Users className="mr-2" /> 15,000+ teams already using Excal.
                   </div>
 
@@ -179,7 +179,7 @@ export default function Home() {
             </div>
          </div>
 
-         <div className="border-b border-foreground/30"></div>
+         <div className="border-b border-white/30"></div>
 
          <div id="features" className="bg-white dark:bg-white/10 pb-30">
             <h1 className="font-bold text-5xl pt-15 pl-15 mr-18 flex justify-center">Powerful features for creative minds</h1>
@@ -190,8 +190,8 @@ export default function Home() {
                {features.map((feature, index) => (
                   <div
                      key={index}
-                     className="bg-black border border-foreground/30 text-foreground/90 px-10 py-4 w-90 rounded-md transition-all 
-              duration-300 hover:shadow-lg hover:shadow-foreground/10 hover:-translate-y-1"
+                     className="bg-black border border-white/30 text-white/90 px-10 py-4 w-90 rounded-md transition-all 
+              duration-300 hover:shadow-lg hover:shadow-white/10 hover:-translate-y-1"
                   >
                      <div className="w-fit pb-6 p-4">{feature.icon}</div>
                      <h3 className="text-2xl font-bold pb-4">{feature.title}</h3>
@@ -203,7 +203,7 @@ export default function Home() {
             </div>
          </div>
 
-         <div className="border-b border-foreground/30 "></div>
+         <div className="border-b border-white/30 "></div>
 
          <div id="pricing" className="pt-15 pb-20">
 
@@ -216,8 +216,8 @@ export default function Home() {
                   <div
                      key={index}
                      className={`bg-black text-white p-8 rounded-lg flex flex-col w-78
-                  ${tier.popular ? "shadow-md shadow-foreground/30 border-1 border-foreground/70 hover:shadow-lg transition-all duration-300"
-                           : "hover:shadow-foreground/40 border border-foreground/30 duration-300 transition-all hover:shadow-md duration-300"}`}
+                  ${tier.popular ? "shadow-md border-white/30 border-1 border-white/70 hover:shadow-lg transition-all duration-300"
+                           : "hover:border-white/40 border border-white/30 duration-300 transition-all hover:shadow-md duration-300"}`}
                   >
                      {tier.popular && (
                         <div className="rounded-full w-fit text-sm mb-4 px-3 py-1 bg-white text-black font-medium">
@@ -249,7 +249,7 @@ export default function Home() {
             </div>
          </div>
 
-         <div className="border-b border-foreground/30 "></div>
+         <div className="border-b border-white/30 "></div>
 
          <div className="pt-15 pb-20 bg-white text-black flex ">
 
