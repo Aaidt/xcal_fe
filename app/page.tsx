@@ -181,7 +181,7 @@ export default function Home() {
 
          <div className="border-b border-white/30"></div>
 
-         <div id="features" className="bg-white dark:bg-white/10 pb-30">
+         <div id="features" className="bg-[#1A1A1A] pb-30">
             <h1 className="font-bold text-5xl pt-15 pl-15 mr-18 flex justify-center">Powerful features for creative minds</h1>
             <p className="mr-18 pt-5 text-gray-400 flex justify-center text-xl text-center">Everything you need to bring your ideas to life, collaborate with others, <br />
                and share your vision.</p>
