@@ -27,6 +27,7 @@ export default function Canvas({
    const { getToken } = useAuth();
    const canvasRef = useRef<HTMLCanvasElement>(null)
    const [selectedTool, setSelectedTool] = useState<Tool | null>(null)
+   const hiddenCanvasRef = useRef<HTMLCanvasElement>(null);
    const [draw, setDraw] = useState<Draw>();
 
    useEffect(() => {
@@ -42,7 +43,7 @@ export default function Canvas({
          }
          if (canvasRef.current) {
             // @ts-ignore
-            const d = new Draw(rough.canvas(document.getElementById("Canvas")), canvasRef.current, roomId, socket, token);
+            const d = new Draw(hiddenCanvasRef.current, canvasRef.current, roomId, socket, token);
             setDraw(d)
 
             return () => {
@@ -56,6 +57,7 @@ export default function Canvas({
 
    return <div className="min-h-screen overflow-hidden">
       <canvas id="Canvas" width={window.innerWidth} height={window.innerHeight} ref={canvasRef} />
+      <canvas id="hiddenCanvas" width={window.innerWidth} height={window.innerHeight} className="hidden" ref={hiddenCanvasRef} />
       <Topbar selectedTool={selectedTool} setSelectedTool={setSelectedTool} link={link} visitors={visitors} />
    </div>
 }
@@ -103,7 +105,7 @@ function Topbar({
          </div>
 
 
-         <div className="fixed top-0 left-0 m-4 flex items-center">
+         <div className="fixed top-0 left-0 z-50 m-4 flex items-center">
 
             <button onClick={() => {
                router.push("/dashboard")
@@ -113,7 +115,7 @@ function Topbar({
 
          </div>
 
-         <div className="fixed top-0 right-0 m-4 flex gap-2 items-center">
+         <div className="fixed top-0 right-0 z-50 m-4 flex gap-2 items-center">
 
             <button onClick={() => {
                toast.success(`Share this link with your friends!! ⚡${link}⚡`)
