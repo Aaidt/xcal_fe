@@ -161,7 +161,7 @@ export default function Home() {
                         </button>
                      </Link>
                      <Link href="/dashboard">                        <button
-                        className="ml-6 bg-background font-medium border flex items-center border-foreground/30 transition-all duration-300 hover:bg-foreground/10 px-3 py-2 rounded-md cursor-pointer">
+                        className="ml-6 bg-transparent font-medium border flex items-center border-foreground/30 transition-all duration-300 hover:bg-foreground/10 px-3 py-2 rounded-md cursor-pointer">
                         Go to dashboard
                      </button>
                      </Link>
