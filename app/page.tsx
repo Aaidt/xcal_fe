@@ -99,9 +99,9 @@ export default function Home() {
 
 
    return (
-      <div className="bg-background text-foreground max-w-screen min-h-screen overflow-hidden">
+      <div className="bg-black text-white max-w-screen min-h-screen overflow-hidden">
 
-         <div className="fixed z-50 top-0 left-0 border-y border-foreground/20 bg-background backdrop-blur-xs bg-transparent w-screen h-22">
+         <div className="fixed z-50 top-0 left-0 border-y border-white/20 bg-black backdrop-blur-xs bg-transparent w-screen h-22">
             <div
                className="flex justify-between items-center h-full p-8">
 
@@ -117,7 +117,7 @@ export default function Home() {
                   </Link>
                   <SignedOut>
                      <SignInButton>
-                        <button className="bg-foreground font-semibold text-background rounded-md font-medium text-sm sm:text-base h-8 sm:h-10 px-3 sm:px-5 cursor-pointer">
+                        <button className="bg-white font-semibold text-black rounded-md font-medium text-sm sm:text-base h-8 sm:h-10 px-3 sm:px-5 cursor-pointer">
                            Login
                         </button>
                      </SignInButton>
@@ -156,12 +156,12 @@ export default function Home() {
 
                   <div className="pt-5 flex ">
                      <Link href="/draw">
-                        <button className="bg-foreground flex items-center text-background font-medium text-md rounded-md px-3 py-2 flex cursor-pointer hover:bg-foreground/80 transition-all duration-200">
+                        <button className="bg-white flex items-center text-black font-medium text-md rounded-md px-3 py-2 flex cursor-pointer hover:bg-white/80 transition-all duration-200">
                            Start drawing now <ArrowRight className="pl-2" />
                         </button>
                      </Link>
                      <Link href="/dashboard">                        <button
-                        className="ml-6 bg-transparent font-medium border flex items-center border-foreground/30 transition-all duration-300 hover:bg-foreground/10 px-3 py-2 rounded-md cursor-pointer">
+                        className="ml-6 bg-transparent font-medium border flex items-center border-foreground/30 transition-all duration-300 hover:bg-white/10 px-3 py-2 rounded-md cursor-pointer">
                         Go to dashboard
                      </button>
                      </Link>
@@ -190,7 +190,7 @@ export default function Home() {
                {features.map((feature, index) => (
                   <div
                      key={index}
-                     className="bg-background border border-foreground/30 text-foreground/90 px-10 py-4 w-90 rounded-md transition-all 
+                     className="bg-black border border-foreground/30 text-foreground/90 px-10 py-4 w-90 rounded-md transition-all 
               duration-300 hover:shadow-lg hover:shadow-foreground/10 hover:-translate-y-1"
                   >
                      <div className="w-fit pb-6 p-4">{feature.icon}</div>
@@ -215,12 +215,12 @@ export default function Home() {
                {prices.map((tier, index) => (
                   <div
                      key={index}
-                     className={`bg-background text-foreground p-8 rounded-lg flex flex-col w-78
+                     className={`bg-black text-white p-8 rounded-lg flex flex-col w-78
                   ${tier.popular ? "shadow-md shadow-foreground/30 border-1 border-foreground/70 hover:shadow-lg transition-all duration-300"
                            : "hover:shadow-foreground/40 border border-foreground/30 duration-300 transition-all hover:shadow-md duration-300"}`}
                   >
                      {tier.popular && (
-                        <div className="rounded-full w-fit text-sm mb-4 px-3 py-1 bg-foreground text-background font-medium">
+                        <div className="rounded-full w-fit text-sm mb-4 px-3 py-1 bg-white text-black font-medium">
                            Most popular
                         </div>
                      )}
@@ -240,7 +240,7 @@ export default function Home() {
                      </ul>
                      <Link href="/signup">
                         <button className={`px-2 py-1 rounded-md w-full duration-300 font-medium cursor-pointer
-                ${tier.popular ? "bg-foreground text-background hover:bg-foreground/80" : "border border-foreground/30 hover:bg-foreground/10"}`}>{tier.buttonText}</button>
+                ${tier.popular ? "bg-white text-black hover:bg-white/80" : "border border-white/30 hover:bg-white/10"}`}>{tier.buttonText}</button>
                      </Link>
 
                   </div>
@@ -251,7 +251,7 @@ export default function Home() {
 
          <div className="border-b border-foreground/30 "></div>
 
-         <div className="pt-15 pb-20 bg-white dark:bg-foreground text-black flex ">
+         <div className="pt-15 pb-20 bg-white text-black flex ">
 
             <div className="pl-25">
                <h1 className="text-4xl font-bold pb-6">Ready to bring your ideas to life?</h1>
