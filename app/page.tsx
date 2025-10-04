@@ -4,7 +4,6 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, Share2, Users, Layers, Check, ChevronRight } from 'lucide-react'
 import { useEffect } from "react";
-import { ModeToggle } from "@/components/ui/ModeToggle"
 import {
    SignInButton,
    SignedIn,
@@ -102,14 +101,13 @@ export default function Home() {
    return (
       <div className="bg-background text-foreground max-w-screen min-h-screen overflow-hidden">
 
-         <div className="fixed z-50 top-0 left-0 border-y border-foreground/20 bg-background backdrop-filter backdrop-blur-md bg-transparent w-screen h-22">
+         <div className="fixed z-50 top-0 left-0 border-y border-foreground/20 bg-background backdrop-blur-xs bg-transparent w-screen h-22">
             <div
                className="flex justify-between items-center h-full p-8">
 
                <div className="text-4xl font-bold flex items-center cursor-pointer">Xcal</div>
 
-               <div className="flex items-center gap-6">
-                  <ModeToggle />
+               <div className="flex items-center gap-12">
 
                   <Link href="#features">
                      <div className="hover:underline hover:underline-offset-3 font-semibold transition-all duration-300 hover:-translate-y-1 cursor-pointer">Features</div>
@@ -133,41 +131,50 @@ export default function Home() {
             </div>
          </div>
 
-         <div className="flex justify-between p-5 pt-32 pl-25 pr-25 pb-20">
+         <div className="relative overflow-hidden flex justify-between p-5 pt-32 pl-25 pr-25 pb-20">
+            <video
+               autoPlay
+               loop
+               muted
+               playsInline
+               className="absolute inset-0 w-full h-full object-cover opacity-20 backdrop-blur"
+               src="https://media.istockphoto.com/id/473312345/video/loopable-mathematic-symbols.mp4?s=mp4-640x640-is&k=20&c=c3jWEVt_zbFFsnkSqQOq1tsUZmaB-qpmqJHmkLbyip0="
+            />
+            <div className="absolute inset-0 bg-black opacity-20" />
+            <div className="relative z-10 flex flex-col pt-5">
+               <div className="flex flex-col pt-5">
+                  <div className="tracking-wide font-bold text-6xl pb-5">
+                     Draw and collaborate <br />
+                     in real-time
+                  </div>
 
-            <div className="flex flex-col pt-5">
-               <div className="tracking-wide font-bold text-6xl pb-5">
-                  Draw and collaborate <br />
-                  in real-time
-               </div>
+                  <div className="text-lg text-foreground/80 text-justify text-wrap ">
+                     Create beautiful diagrams, sketches and wireframes with a <br />
+                     simple, intuitive interface. Share your ideas with your team in <br />
+                     real-time and bring your concpets to life.
+                  </div>
 
-               <div className=" text-lg text-gray-500 text-justify text-wrap ">
-                  Create beautiful diagrams, sketches and wireframes with a <br />
-                  simple, intuitive interface. Share your ideas with your team in <br />
-                  real-time and bring your concpets to life.
-               </div>
-
-               <div className="pt-5 flex ">
-                  <Link href="/draw">
-                     <button className="bg-foreground flex items-center text-background font-medium text-md rounded-md px-3 py-2 flex cursor-pointer hover:bg-foreground/80 transition-all duration-200">
-                        Start drawing now <ArrowRight className="pl-2" />
+                  <div className="pt-5 flex ">
+                     <Link href="/draw">
+                        <button className="bg-foreground flex items-center text-background font-medium text-md rounded-md px-3 py-2 flex cursor-pointer hover:bg-foreground/80 transition-all duration-200">
+                           Start drawing now <ArrowRight className="pl-2" />
+                        </button>
+                     </Link>
+                     <Link href="/dashboard">                        <button
+                        className="ml-6 bg-background font-medium border flex items-center border-foreground/30 transition-all duration-300 hover:bg-foreground/10 px-3 py-2 rounded-md cursor-pointer">
+                        Go to dashboard
                      </button>
-                  </Link>
-                  <Link href="/dashboard">                        <button
-                     className="ml-6 bg-background font-medium border flex items-center border-foreground/30 transition-all duration-300 hover:bg-foreground/10 px-3 py-2 rounded-md cursor-pointer">
-                     Go to dashboard
-                  </button>
-                  </Link>
+                     </Link>
+
+                  </div>
+
+                  <div className="flex pt-5 text-foreground/80 ">
+                     <Users className="mr-2" /> 15,000+ teams already using Excal.
+                  </div>
 
                </div>
-
-               <div className="flex pt-5 text-gray-400">
-                  <Users className="mr-2" /> 15,000+ teams already using Excal.
-               </div>
-
             </div>
-
-            <div>
+            <div className="relative z-10 ">
                <Image src="https://i.pinimg.com/736x/6e/22/33/6e22335dfb94c453afefc69cb46528f2.jpg" alt="image" width={400} height={500} />
             </div>
          </div>
