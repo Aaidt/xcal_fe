@@ -169,7 +169,7 @@ export default function Home() {
                   </div>
 
                   <div className="flex pt-5 text-white/80 ">
-                     <Users className="mr-2" /> 15,000+ teams already using Excal.
+                     <Users className="mr-2" /> 15,000+ teams already using Xcal.
                   </div>
 
                </div>
