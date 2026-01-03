@@ -1,8 +1,8 @@
 
 import { auth } from "@clerk/nextjs/server";
-import { prismaClient } from "../../../../lib/prismaClient";
+import { prismaClient } from "@/lib/prismaClient";
 import { NextResponse } from "next/server";
-import { hashFunction } from "../../../../lib/utils";
+import { hashFunction } from "@/lib/utils";
 
 export async function POST(req: Request) {
     const { userId } = await auth();
