@@ -5,7 +5,7 @@ import { auth } from "@clerk/nextjs/server"; // although Express route didn't ex
 // So ALL routes under /api/room are protected.
 // I must include auth check in all my routes.
 
-import { prismaClient } from "../../../../../lib/db/prismaClient";
+import { prismaClient } from "../../../../../lib/prismaClient";
 import { NextResponse } from "next/server";
 
 export async function POST(

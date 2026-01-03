@@ -1,6 +1,6 @@
 
 import { auth } from "@clerk/nextjs/server";
-import { prismaClient } from "../../../../lib/db/prismaClient";
+import { prismaClient } from "../../../../lib/prismaClient";
 import { NextResponse } from "next/server";
 
 export async function GET(

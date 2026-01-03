@@ -4,12 +4,12 @@
    "type": "module",
    "private": true,
    "scripts": {
-      "dev": "cd lib && npx prisma generate --schema=./db/prisma/schema.prisma && cd .. && next dev --turbopack --port 3001",
-      "build": "cd lib && npx prisma generate --schema=./db/prisma/schema.prisma && cd .. && next build",
-      "start": "cd lib && npx prisma generate --schema=./db/prisma/schema.prisma && cd .. && next start",
+      "dev": "npx prisma generate --config=./prisma.config.ts && next dev --turbopack --port 3001",
+      "build": "npx prisma generate --config=./prisma.config.ts && next build",
+      "start": "npx prisma generate --config=./prisma.config.ts && next start",
       "lint": "next lint --max-warnings 0",
       "check-types": "tsc --noEmit",
-      "postinstall": "prisma generate --schema=./lib/db/prisma/schema.prisma"
+      "postinstall": "prisma generate --config=./prisma.config.ts"
    },
    "dependencies": {
       "@clerk/nextjs": "^6.31.9",
