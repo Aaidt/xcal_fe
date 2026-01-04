@@ -52,32 +52,50 @@ export default function RoomCard({ room, visiting, onRefresh }: RoomCardProps) {
             }} />
 
          <div
-            className="border border-foreground/10 bg-foreground/5 p-4 rounded-md hover:bg-foreground/10 duration-200
-       shadow hover:shadow-lg transition cursor-pointer">
-            <div
-               onClick={() => router.push(`/canvas/${room.slug}`)}
-               className="flex items-center justify-between">
+            onClick={() => router.push(`/canvas/${room.slug}`)}
+            className="relative bg-white dark:bg-[#1e1e1e] border-2 border-black/10 dark:border-white/20 p-6 rounded-[255px_15px_225px_15px/15px_225px_15px_255px] 
+            hover:border-indigo-400 dark:hover:border-[#A8A5FF] hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-indigo-500/10 dark:hover:shadow-[#A8A5FF]/10 group cursor-pointer h-full flex flex-col justify-between">
+            
+            <div className="flex items-start justify-between mb-4">
                <div>
-                  <h3 className="text-lg font-medium">{room.slug}</h3>
-                  <p className="text-sm text-gray-500">Created: {new Date(room.created_at).toLocaleDateString()}</p>
+                  <h3 className="text-2xl font-kalam font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-[#A8A5FF] transition-colors">{room.slug}</h3>
+                  <p className="text-sm text-gray-500 dark:text-white/40 font-sans mt-1">Created: {new Date(room.created_at).toLocaleDateString()}</p>
                </div>
-
-               {visiting ? null : <div className="flex gap-6">
-
-                  <Share onClick={(e) => {
-                     e.stopPropagation();
-                     toast.success(`Share this link with your friends!!! ⚡${room.link.link}⚡`)
-                  }} className="size-4 cursor-pointer" strokeWidth="1.5" />
-
-                  <Trash2
-                     className="size-4 cursor-pointer hover:text-red-700 text-red-800"
-                     onClick={(e) => {
-                        e.stopPropagation();
-                        setDeleteModalOpen(true)
-                     }}
-                  />
+               
+               {/* Decorative icon or status could go here */}
+               <div className="w-8 h-8 rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center bg-black/5 dark:bg-black/20">
+                  <span className="text-xs text-black/30 dark:text-white/30">✎</span>
                </div>
-               }
+            </div>
+
+            <div className="border-t border-black/10 dark:border-white/10 pt-4 mt-auto flex justify-end gap-3 opacity-60 group-hover:opacity-100 transition-opacity">
+               {visiting ? (
+                  <span className="text-xs text-gray-500 dark:text-white/30 font-kalam">Read Only</span>
+               ) : (
+                  <>
+                     <button 
+                        onClick={(e) => {
+                           e.stopPropagation();
+                           toast.success(`Share this link with your friends!!! ⚡${room.link.link}⚡`)
+                        }}
+                        className="p-2 hover:bg-black/5 dark:hover:bg-white/10 rounded-full text-gray-500 dark:text-white/70 hover:text-indigo-600 dark:hover:text-[#A8A5FF] transition-colors"
+                        title="Share Link"
+                     >
+                        <Share className="size-4" strokeWidth="2" />
+                     </button>
+
+                     <button
+                        onClick={(e) => {
+                           e.stopPropagation();
+                           setDeleteModalOpen(true)
+                        }}
+                        className="p-2 hover:bg-red-500/10 rounded-full text-gray-500 dark:text-white/70 hover:text-red-500 dark:hover:text-red-400 transition-colors"
+                        title="Delete Room"
+                     >
+                        <Trash2 className="size-4" />
+                     </button>
+                  </>
+               )}
             </div>
          </div>
       </motion.div>

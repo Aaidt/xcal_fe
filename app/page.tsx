@@ -223,7 +223,7 @@ export default function Home() {
             <div className="absolute bottom-0 left-0 p-32 bg-pink-500 opacity-5 blur-[80px] rounded-full pointer-events-none"></div>
 
             <div className="relative z-10">
-              <h2 className="text-5xl md:text-6xl font-kalam font-bold mb-6 text-white group-hover:scale-105 transition-transform duration-500">
+              <h2 className="text-5xl md:text-6xl font-kalam font-bold mb-6 text-white transition-transform duration-500">
                 Ready to start drawing?
               </h2>
               <p className="text-xl text-white/50 mb-10 max-w-lg mx-auto font-sans">
