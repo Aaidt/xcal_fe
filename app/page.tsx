@@ -148,7 +148,13 @@ export default function Home() {
       </section>
 
       {/* --- PRICING --- */}
-      <section id="pricing" className="py-24 px-6 bg-[#121212]">
+      <section id="pricing" className="py-24 px-6 bg-[#121212] relative">
+         <div className="absolute inset-0 opacity-[0.1] pointer-events-none"
+             style={{ 
+                 backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', 
+                 backgroundSize: '24px 24px' 
+             }}>
+        </div>
         <div className="max-w-7xl mx-auto text-center mb-16">
           <h2 className="text-5xl font-kalam font-bold mb-4">Simple Pricing</h2>
           <p className="text-white/60 font-kalam text-lg">Choose the plan that fits your needs</p>
@@ -201,7 +207,13 @@ export default function Home() {
       </section>
 
       {/* --- CTA SECTION --- */}
-      <section className="py-24 px-6 bg-[#121212]">
+      <section className="py-24 px-6 bg-[#121212] relative">
+         <div className="absolute inset-0 opacity-[0.1] pointer-events-none"
+             style={{ 
+                 backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', 
+                 backgroundSize: '24px 24px' 
+             }}>
+        </div>
         <div className="max-w-5xl mx-auto">
           <div className="bg-gradient-to-br from-[#1e1e1e] to-black p-12 relative overflow-hidden text-center group
             rounded-[255px_15px_225px_15px/15px_225px_15px_255px] border-2 border-white/10 hover:border-[#A8A5FF]/50 transition-colors">
