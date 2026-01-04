@@ -2,274 +2,232 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Share2, Users, Layers, Check, ChevronRight } from 'lucide-react'
-import { useEffect } from "react";
-import {
-   SignInButton,
-   SignedIn,
-   SignedOut,
-   UserButton,
-   useAuth,
-} from "@clerk/nextjs"
+import { ArrowRight, Share2, Users, Layers, Check, ChevronRight, Menu } from 'lucide-react'
+import { useEffect, useState } from "react";
+import { SignInButton, SignedIn, SignedOut, UserButton, useAuth } from "@clerk/nextjs"
 import axios from "axios"
 
 export default function Home() {
-   const features = [
-      {
-         icon: <Users className="h-8 w-8" strokeWidth="1.5" />,
-         title: "Real-time collboration",
-         description: "Work together with your team on the same canvas in real-time, seeing changes as they happen."
-      },
-      {
-         icon: <Share2 className="h-8 w-8" strokeWidth="1.5" />,
-         title: "Easy Sharing",
-         description: "Share your drawings with a simple link. Control who can view or edit your work.",
-      },
-      {
-         icon: <Layers className="h-8 w-8" strokeWidth="1.5" />,
-         title: "Infinite canvas",
-         description: "Never run out of space with our infinite canvas that expands as you draw.",
+  const { isSignedIn, getToken } = useAuth();
+  const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+  useEffect(() => {
+    const checkUser = async () => {
+      if (!isSignedIn) return;
+      try {
+        const token = await getToken();
+        await axios.get(`${BACKEND_URL}/api/me`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      } catch (err) {
+        console.error("User sync failed:", err);
       }
-   ]
+    };
+    checkUser();
+  }, [isSignedIn, getToken, BACKEND_URL]);
 
-   const prices = [
-      {
-         name: "Free",
-         price: "$0",
-         description: "Perfect for getting started",
-         features: [
-            "Up to 100 notes",
-            "Basic organization",
-            "Mobile access",
-            "Community support"
-         ],
-         buttonText: "Get Started",
-      },
-      {
-         name: "Pro",
-         price: "$9.99",
-         period: "/month",
-         description: "For serious thinkers",
-         features: [
-            "Unlimited notes",
-            "Advanced organization",
-            "AI-powered insights",
-            "Priority support",
-            "Custom themes",
-            "Export options"
-         ],
-         buttonText: "Start Free Trial",
-         popular: true
-      },
-      {
-         name: "Enterprise",
-         price: "Custom",
-         description: "For organizations",
-         features: [
-            "Everything in Pro",
-            "Team collaboration",
-            "Advanced security",
-            "Custom integrations",
-            "Dedicated support",
-            "SLA guarantee"
-         ],
-         buttonText: "Contact Sales"
-      }
-   ]
+  const features = [
+    {
+      icon: <Users className="h-6 w-6 text-blue-400" />,
+      title: "Real-time collaboration",
+      description: "Work together with your team on the same canvas in real-time, seeing changes as they happen."
+    },
+    {
+      icon: <Share2 className="h-6 w-6 text-purple-400" />,
+      title: "Easy Sharing",
+      description: "Share your drawings with a simple link. Control who can view or edit your work."
+    },
+    {
+      icon: <Layers className="h-6 w-6 text-emerald-400" />,
+      title: "Infinite canvas",
+      description: "Never run out of space with our infinite canvas that expands as you draw."
+    }
+  ];
 
-   const { isSignedIn, getToken } = useAuth();
-   const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
+  const prices = [
+    { name: "Free", price: "$0", description: "Perfect for getting started", features: ["Up to 100 notes", "Basic organization", "Mobile access"], buttonText: "Get Started" },
+    { name: "Pro", price: "$9.99", period: "/mo", description: "For serious thinkers", features: ["Unlimited notes", "AI-powered insights", "Priority support", "Export options"], buttonText: "Start Free Trial", popular: true },
+    { name: "Enterprise", price: "Custom", description: "For organizations", features: ["Everything in Pro", "Advanced security", "Custom integrations", "SLA guarantee"], buttonText: "Contact Sales" }
+  ];
 
-   useEffect(() => {
-      async function checkUser() {
-         if (!isSignedIn) return
-         try {
-            const token = await getToken();
-            const response = await axios.get(`${BACKEND_URL}/api/me`, {
-               headers: { Authorization: `Bearer ${token}` }
-            });
-            console.log(response);
-         } catch (err) {
-            console.log("Error in confirming user status." + err)
-         }
-      }
+  return (
+    <div className="bg-black text-white min-h-screen selection:bg-white/30">
+      
+      {/* --- NAVBAR --- */}
+      <nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-black/60 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+          <div className="text-2xl font-bold tracking-tighter cursor-pointer">Xcal</div>
+          
+          <div className="hidden md:flex items-center gap-8">
+            <Link href="#features" className="text-sm text-gray-400 hover:text-white transition-colors">Features</Link>
+            <Link href="#pricing" className="text-sm text-gray-400 hover:text-white transition-colors">Pricing</Link>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="bg-white text-black px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-200 transition-all">
+                  Sign In
+                </button>
+              </SignInButton>
+            </SignedOut>
+            <SignedIn><UserButton afterSignOutUrl="/" /></SignedIn>
+          </div>
+          <button className="md:hidden"><Menu /></button>
+        </div>
+      </nav>
 
-      checkUser()
-   }, [isSignedIn, getToken])
+      {/* --- HERO SECTION --- */}
+      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+        {/* Background Video with improved overlay */}
+        <div className="absolute inset-0 z-0">
+          <video autoPlay loop muted playsInline className="w-full h-full object-cover opacity-30 grayscale" src="https://media.istockphoto.com/id/473312345/video/loopable-mathematic-symbols.mp4?s=mp4-640x640-is&k=20&c=c3jWEVt_zbFFsnkSqQOq1tsUZmaB-qpmqJHmkLbyip0=" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
+        </div>
 
-
-   return (
-      <div className="bg-black text-white max-w-screen min-h-screen overflow-hidden">
-
-         <div className="fixed z-50 top-0 left-0 border-y border-white/20 bg-black backdrop-blur-xs bg-transparent w-screen h-22">
-            <div
-               className="flex justify-between items-center h-full p-8">
-
-               <div className="text-4xl font-bold flex items-center cursor-pointer">Xcal</div>
-
-               <div className="flex items-center gap-12">
-
-                  <Link href="#features">
-                     <div className="hover:underline hover:underline-offset-3 font-semibold transition-all duration-300 hover:-translate-y-1 cursor-pointer">Features</div>
-                  </Link>
-                  <Link href="#pricing">
-                     <div className="hover:underline hover:underline-offset-3 font-semibold transition-all duration-300 hover:-translate-y-1 cursor-pointer">Pricing</div>
-                  </Link>
-                  <SignedOut>
-                     <SignInButton>
-                        <button className="bg-white font-semibold text-black rounded-md font-medium text-sm sm:text-base h-8 sm:h-10 px-3 sm:px-5 cursor-pointer">
-                           Login
-                        </button>
-                     </SignInButton>
-                  </SignedOut>
-                  <SignedIn>
-                     <UserButton />
-                  </SignedIn>
-
-
-               </div>
+        <div className="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h1 className="text-5xl lg:text-7xl font-bold leading-[1.1] mb-6 tracking-tight">
+              Draw and collaborate <span className="text-gray-500 italic">in real-time</span>
+            </h1>
+            <p className="text-lg text-gray-400 mb-8 max-w-lg leading-relaxed">
+              Create beautiful diagrams, sketches and wireframes with a simple interface. 
+              Join 15,000+ teams bringing concepts to life instantly.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/draw">
+                <button className="bg-white text-black px-6 py-3 rounded-full font-bold flex items-center gap-2 hover:scale-105 transition-transform">
+                  Start drawing now <ArrowRight size={18} />
+                </button>
+              </Link>
+              <Link href="/dashboard">
+                <button className="border border-white/20 px-6 py-3 rounded-full font-bold hover:bg-white/5 transition-colors">
+                  Go to dashboard
+                </button>
+              </Link>
             </div>
-         </div>
-
-         <div className="relative overflow-hidden flex justify-between p-5 pt-32 pl-25 pr-25 pb-20">
-            <video
-               autoPlay
-               loop
-               muted
-               playsInline
-               className="absolute inset-0 w-full h-full object-cover opacity-20 backdrop-blur"
-               src="https://media.istockphoto.com/id/473312345/video/loopable-mathematic-symbols.mp4?s=mp4-640x640-is&k=20&c=c3jWEVt_zbFFsnkSqQOq1tsUZmaB-qpmqJHmkLbyip0="
+          </div>
+          <div className="hidden lg:block relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+            <Image 
+              src="https://i.pinimg.com/736x/6e/22/33/6e22335dfb94c453afefc69cb46528f2.jpg" 
+              alt="Platform Preview" 
+              width={600} height={400} 
+              className="relative rounded-2xl border border-white/10 shadow-2xl"
             />
-            <div className="absolute inset-0 bg-black opacity-20" />
-            <div className="relative z-10 flex flex-col pt-5">
-               <div className="flex flex-col pt-5">
-                  <div className="tracking-wide font-bold text-6xl pb-5">
-                     Draw and collaborate <br />
-                     in real-time
-                  </div>
+          </div>
+        </div>
+      </section>
 
-                  <div className="text-lg text-white/80 text-justify text-wrap ">
-                     Create beautiful diagrams, sketches and wireframes with a <br />
-                     simple, intuitive interface. Share your ideas with your team in <br />
-                     real-time and bring your concpets to life.
-                  </div>
+      {/* --- FEATURES --- */}
+      <section id="features" className="py-24 bg-[#121212] relative overflow-hidden">
+        {/* Dot Grid Background for Features */}
+        <div className="absolute inset-0 opacity-[0.1] pointer-events-none"
+             style={{ 
+                 backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', 
+                 backgroundSize: '24px 24px' 
+             }}>
+        </div>
 
-                  <div className="pt-5 flex ">
-                     <Link href="/draw">
-                        <button className="bg-white flex items-center text-black font-medium text-md rounded-md px-3 py-2 flex cursor-pointer hover:bg-white/80 transition-all duration-200">
-                           Start drawing now <ArrowRight className="pl-2" />
-                        </button>
-                     </Link>
-                     <Link href="/dashboard">                        <button
-                        className="ml-6 bg-transparent font-medium border flex items-center border-white/30 transition-all duration-300 hover:bg-white/10 px-3 py-2 rounded-md cursor-pointer">
-                        Go to dashboard
-                     </button>
-                     </Link>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-kalam font-bold mb-4 text-[#A8A5FF] -rotate-1 inline-block">Powerful features</h2>
+            <p className="text-white/60 text-xl font-kalam mt-2">Everything you need to collaborate at scale.</p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map((f, i) => (
+              <div key={i} className="group p-8 border-2 border-white/20 hover:border-[#A8A5FF] transition-all duration-300 hover:-translate-y-2 bg-[#1e1e1e]
+                rounded-[255px_15px_225px_15px/15px_225px_15px_255px]">
+                <div className="mb-6 p-4 bg-black/40 w-16 h-16 flex items-center justify-center rounded-full border border-white/10 group-hover:scale-110 transition-transform">
+                  {f.icon}
+                </div>
+                <h3 className="text-2xl font-kalam font-bold mb-3">{f.title}</h3>
+                <p className="text-white/60 leading-relaxed font-sans">{f.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                  </div>
+      {/* --- PRICING --- */}
+      <section id="pricing" className="py-24 px-6 bg-[#121212]">
+        <div className="max-w-7xl mx-auto text-center mb-16">
+          <h2 className="text-5xl font-kalam font-bold mb-4">Simple Pricing</h2>
+          <p className="text-white/60 font-kalam text-lg">Choose the plan that fits your needs</p>
+        </div>
 
-                  <div className="flex pt-5 text-white/80 ">
-                     <Users className="mr-2" /> 15,000+ teams already using Xcal.
-                  </div>
-
-               </div>
+        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 items-start">
+          {prices.map((tier, i) => (
+            <div key={i} className={`relative p-8 transition-all duration-300 group
+              rounded-[255px_15px_225px_15px/15px_225px_15px_255px]
+              ${tier.popular 
+                ? 'bg-[#1e1e1e] border-2 border-[#A8A5FF] shadow-[0_0_20px_-5px_rgba(168,165,255,0.3)] scale-105 z-10' 
+                : 'bg-black/20 border-2 border-white/10 hover:border-white/30'
+              }`}>
+              
+              {tier.popular && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#A8A5FF] text-black font-kalam font-bold px-4 py-1 rounded-[255px_15px_225px_15px/15px_225px_15px_255px] text-sm rotate-2 shadow-lg">
+                  MOST POPULAR
+                </div>
+              )}
+              
+              <h3 className="font-kalam text-2xl font-bold mb-2">{tier.name}</h3>
+              <div className="flex items-baseline gap-1 mb-6">
+                <span className="text-4xl font-bold font-sans">{tier.price}</span>
+                {tier.period && <span className="text-white/50 text-sm font-sans">{tier.period}</span>}
+              </div>
+              
+              <p className="text-white/60 mb-8 pb-6 border-b border-white/10 text-sm">{tier.description}</p>
+              
+              <ul className="space-y-4 mb-8 text-left">
+                {tier.features.map((feat, j) => (
+                  <li key={j} className="flex items-center gap-3 text-sm text-white/80">
+                    <div className="min-w-[20px] h-5 rounded-full bg-[#A8A5FF]/20 flex items-center justify-center text-[#A8A5FF]">
+                      <Check size={12} strokeWidth={3} />
+                    </div>
+                    {feat}
+                  </li>
+                ))}
+              </ul>
+              
+              <button className={`w-full py-3 font-kalam font-bold text-lg transition-all rounded-[255px_15px_225px_15px/15px_225px_15px_255px] border-2
+                ${tier.popular 
+                  ? 'bg-[#A8A5FF] text-black border-black hover:bg-[#B8B5FF] hover:-translate-y-1 hover:shadow-lg' 
+                  : 'bg-transparent text-white border-white/20 hover:border-white hover:bg-white/5'
+                }`}>
+                {tier.buttonText}
+              </button>
             </div>
-            <div className="relative z-10 ">
-               <Image src="https://i.pinimg.com/736x/6e/22/33/6e22335dfb94c453afefc69cb46528f2.jpg" alt="image" width={400} height={500} />
+          ))}
+        </div>
+      </section>
+
+      {/* --- CTA SECTION --- */}
+      <section className="py-24 px-6 bg-[#121212]">
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-gradient-to-br from-[#1e1e1e] to-black p-12 relative overflow-hidden text-center group
+            rounded-[255px_15px_225px_15px/15px_225px_15px_255px] border-2 border-white/10 hover:border-[#A8A5FF]/50 transition-colors">
+            
+            {/* Ambient Glow */}
+            <div className="absolute top-0 right-0 p-32 bg-[#A8A5FF] opacity-5 blur-[80px] rounded-full pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 p-32 bg-pink-500 opacity-5 blur-[80px] rounded-full pointer-events-none"></div>
+
+            <div className="relative z-10">
+              <h2 className="text-5xl md:text-6xl font-kalam font-bold mb-6 text-white group-hover:scale-105 transition-transform duration-500">
+                Ready to start drawing?
+              </h2>
+              <p className="text-xl text-white/50 mb-10 max-w-lg mx-auto font-sans">
+                Join thousands of developers and designers who trust Xcal for their diagrams.
+              </p>
+              
+              <div className="flex justify-center">
+                <button className="bg-white text-black px-8 py-4 font-kalam font-bold text-xl flex items-center gap-2 hover:scale-105 hover:rotate-1 transition-all
+                  rounded-[255px_15px_225px_15px/15px_225px_15px_255px] border-2 border-transparent hover:border-[#A8A5FF] shadow-xl">
+                  Get Started Free <ChevronRight size={24} />
+                </button>
+              </div>
             </div>
-         </div>
-
-         <div className="border-b border-white/30"></div>
-
-         <div id="features" className="bg-[#1A1A1A] pb-30">
-            <h1 className="font-bold text-5xl pt-15 pl-15 mr-18 flex justify-center">Powerful features for creative minds</h1>
-            <p className="mr-18 pt-5 text-gray-400 flex justify-center text-xl text-center">Everything you need to bring your ideas to life, collaborate with others, <br />
-               and share your vision.</p>
-            <div className="flex gap-12 justify-center pt-5">
-
-               {features.map((feature, index) => (
-                  <div
-                     key={index}
-                     className="bg-black border border-white/30 text-white/90 px-10 py-4 w-90 rounded-md transition-all 
-              duration-300 hover:shadow-lg hover:shadow-white/10 hover:-translate-y-1"
-                  >
-                     <div className="w-fit pb-6 p-4">{feature.icon}</div>
-                     <h3 className="text-2xl font-bold pb-4">{feature.title}</h3>
-                     <p className="text-gray-400 text-wrap">{feature.description}</p>
-
-                  </div>
-               ))}
-
-            </div>
-         </div>
-
-         <div className="border-b border-white/30 "></div>
-
-         <div id="pricing" className="pt-15 pb-20">
-
-            <div className="text-5xl font-bold flex justify-center pb-15">
-               Pricing
-            </div>
-
-            <div className="flex gap-8 justify-center">
-               {prices.map((tier, index) => (
-                  <div
-                     key={index}
-                     className={`bg-black text-white p-8 rounded-lg flex flex-col w-78
-                  ${tier.popular ? "shadow-md border-white/30 border-1 border-white/70 hover:shadow-lg transition-all duration-300"
-                           : "hover:border-white/40 border border-white/30 duration-300 transition-all hover:shadow-md duration-300"}`}
-                  >
-                     {tier.popular && (
-                        <div className="rounded-full w-fit text-sm mb-4 px-3 py-1 bg-white text-black font-medium">
-                           Most popular
-                        </div>
-                     )}
-                     <h3 className="font-medium">{tier.name}</h3>
-                     <div className="flex items-baseline mb-4 ">
-                        <span className="text-4xl font-light">{tier.price}</span>
-                        {tier.period && <span className="text-lg text-gray-400 ml-1">{tier.period}</span>}
-                     </div>
-                     <p className=" mb-6 text-gray-400">{tier.description}</p>
-                     <ul className="space-y-3 mb-8">
-                        {tier.features.map((feature, i) => (
-                           <li key={i} className="flex items-center gap-2">
-                              <Check className="h-5 w-5 " />
-                              <span>{feature}</span>
-                           </li>
-                        ))}
-                     </ul>
-                     <Link href="/signup">
-                        <button className={`px-2 py-1 rounded-md w-full duration-300 font-medium cursor-pointer
-                ${tier.popular ? "bg-white text-black hover:bg-white/80" : "border border-white/30 hover:bg-white/10"}`}>{tier.buttonText}</button>
-                     </Link>
-
-                  </div>
-
-               ))}
-            </div>
-         </div>
-
-         <div className="border-b border-white/30 "></div>
-
-         <div className="pt-15 pb-20 bg-white text-black flex ">
-
-            <div className="pl-25">
-               <h1 className="text-4xl font-bold pb-6">Ready to bring your ideas to life?</h1>
-               <p className="text-gray-600 text-lg">Join thousands of teams who use Xcal to collaborate, ideate,
-                  <br /> and create amazing visuals together</p>
-            </div>
-
-            <div className="flex jusify-center items-center pl-15 gap-8">
-               <button className="cursor-pointer bg-black/90 text-white rounded-md px-4 py-2 hover:bg-black/80 duration-300 transition-all flex items-center ">
-                  Start for free <ChevronRight size="18" className="ml-1" />
-               </button>
-               <button className="bg-white cursor-pointer hover:bg-black/20 text-black rounded-md px-4 py-2 border border-black/30 duration-300 transition-all">
-                  See live demo
-               </button>
-            </div>
-
-         </div>
-
-      </div >
-   );
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 }
