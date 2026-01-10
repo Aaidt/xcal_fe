@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
----break--- */  
+---break--- */
 
 @theme inline {
 
@@ -227,7 +227,72 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* React Toastify Custom Overrides */
+.Toastify__toast {
+  font-family: var(--font-kalam) !important;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important;
+  border: 2px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.1) !important;
+  padding: 1rem !important;
+  font-weight: 700 !important;
+  align-items: center !important;
+}
+
+.dark .Toastify__toast {
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 2px 2px 0px 0px rgba(255, 255, 255, 0.1) !important;
+  background-color: #1e1e1e !important;
+  /* Matches modal dark bg */
+  color: white !important;
+}
+
+.Toastify__toast--success {
+  color: #15803d !important;
+  /* green-700 */
+}
+
+.dark .Toastify__toast--success {
+  color: #86efac !important;
+  /* green-300 */
+}
+
+.Toastify__progress-bar--success {
+  background-color: #15803d !important;
+}
+
+.dark .Toastify__progress-bar--success {
+  background-color: #86efac !important;
+}
+
+.Toastify__toast--error {
+  color: #b91c1c !important;
+  /* red-700 */
+}
+
+.dark .Toastify__toast--error {
+  color: #fca5a5 !important;
+  /* red-300 */
+}
+
+.Toastify__progress-bar--error {
+  background-color: #b91c1c !important;
+}
+
+.dark .Toastify__progress-bar--error {
+  background-color: #fca5a5 !important;
+}
+
+.Toastify__close-button {
+  color: inherit !important;
+  opacity: 0.6 !important;
+}
+
+.Toastify__close-button:hover {
+  opacity: 1 !important;
 }

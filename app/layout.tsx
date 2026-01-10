@@ -56,7 +56,6 @@ export default function RootLayout({
                      newestOnTop={true}
                      rtl={false}
                      pauseOnHover
-                     theme="dark"
                      transition={Zoom}
                   />
 
