@@ -32,10 +32,10 @@ A modern, real-time collaborative whiteboard application built with Next.js, fea
 - **Graphics**: [Rough.js](https://roughjs.com/), HTML5 Canvas API
 - **State Management**: React Hooks
 - **Database Helper**: Prisma ORM
-- **Authentication**: Clerk / NextAuth (Configurable)
+- **Authentication**: Clerk
 - **Networking**: Axios, WebSocket
 
-## � Repository Structure
+##  Repository Structure
 
 The project follows a standard Next.js App Router structure with additional directories for game logic and utilities.
 

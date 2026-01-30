@@ -6,7 +6,7 @@ import { Users, Pencil, Square, Minus, MoveRight, MousePointer, Circle, SquareAr
 import { toast } from "react-toastify"
 import { useAuth } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
-import { Draw } from "@/game/draw"
+import { Draw } from "@/draw/draw"
 import rough from "roughjs"
 
 export type Tool = "pencil" | "rect" | "line" | "arrow" | "pointer" | "ellipse"
