@@ -51,7 +51,7 @@ xcal_fe/
 │   └── page.tsx          # Landing page
 ├── components/           # Reusable React components
 │   └── ui/               # UI components (buttons, inputs, etc.)
-├── game/                 # Core game logic
+├── draw/                 # Core drawing logic
 │   ├── draw.ts           # Canvas drawing implementation (Rough.js integration)
 │   └── http.ts           # Game-specific HTTP helpers
 ├── lib/                  # Utilities and configuration
