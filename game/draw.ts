@@ -1,4 +1,3 @@
-// draw.ts
 import { getExistingShapes } from "./http"
 import { Tool } from "@/components/ui/Canvas"
 import rough from "roughjs"
